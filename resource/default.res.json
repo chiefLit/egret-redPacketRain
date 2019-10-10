@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "description_json",
+			"keys": "description_json,share_redpacket2_png,redpacket_background@2x_png,redpacket_count@2x_png,redpacket_mainbackground@2x_png,redpacket_number@2x_png,redpacket_number1@2x_png,redpacket_number2@2x_png,redpacket_number3@2x_png,redpacket_numberGo@2x_png,redpacket_person1@2x_png,redpacket_person2@2x_png,redpacket_person3@2x_png,redpacket_person4@2x_png,redpacket_time@2x_png,share_redpacket1_png",
 			"name": "preload"
 		}
 	],
@@ -10,6 +10,81 @@
 			"name": "description_json",
 			"type": "json",
 			"url": "config/description.json"
+		},
+		{
+			"name": "share_redpacket2_png",
+			"type": "image",
+			"url": "assets/share_redpacket2.png"
+		},
+		{
+			"name": "redpacket_background@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_background@2x.png"
+		},
+		{
+			"name": "redpacket_count@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_count@2x.png"
+		},
+		{
+			"name": "redpacket_mainbackground@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_mainbackground@2x.png"
+		},
+		{
+			"name": "redpacket_number@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_number@2x.png"
+		},
+		{
+			"name": "redpacket_number1@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_number1@2x.png"
+		},
+		{
+			"name": "redpacket_number2@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_number2@2x.png"
+		},
+		{
+			"name": "redpacket_number3@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_number3@2x.png"
+		},
+		{
+			"name": "redpacket_numberGo@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_numberGo@2x.png"
+		},
+		{
+			"name": "redpacket_person1@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_person1@2x.png"
+		},
+		{
+			"name": "redpacket_person2@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_person2@2x.png"
+		},
+		{
+			"name": "redpacket_person3@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_person3@2x.png"
+		},
+		{
+			"name": "redpacket_person4@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_person4@2x.png"
+		},
+		{
+			"name": "redpacket_time@2x_png",
+			"type": "image",
+			"url": "assets/redpacket_time@2x.png"
+		},
+		{
+			"name": "share_redpacket1_png",
+			"type": "image",
+			"url": "assets/share_redpacket1.png"
 		}
 	]
 }
