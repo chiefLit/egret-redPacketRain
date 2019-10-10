@@ -14,11 +14,11 @@ var PlayGameScene = (function (_super) {
     function PlayGameScene() {
         var _this = _super.call(this) || this;
         _this.timeOnEnterFrame = 0;
-        _this.packetList = [];
         // 左上角图标
         _this.topLeftSpr = new egret.Sprite();
         // 右上角图标
         _this.topRightSpr = new egret.Sprite();
+        _this.packetList = [];
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initView, _this);
         _this.addEventListener(egret.Event.ENTER_FRAME, _this.onEnterFrame, _this);
         _this.timeOnEnterFrame = egret.getTimer();
@@ -65,7 +65,7 @@ var PlayGameScene = (function (_super) {
                 // 游戏结束
             }
             else {
-                if (Math.random() > GameData.packetProbability) {
+                if (Math.random() < GameData.packetProbability) {
                     var redPacket = new RedPacket();
                     _this.packetList.push(redPacket);
                     _this.addChild(redPacket);
@@ -80,34 +80,25 @@ var PlayGameScene = (function (_super) {
         var now = egret.getTimer();
         var time = this.timeOnEnterFrame;
         var pass = now - time;
-        var deleteItem = function (packet, index) {
+        this.timeOnEnterFrame = now;
+        var deleteItem = function (packet) {
             packet.removeListener();
             _this.removeChild(packet);
-            _this.packetList.splice(index, 1);
         };
-        this.packetList.map(function (packet, index) {
-            // 游戏结束操作
-            if (GameControl.getGameState() === 2) {
-                deleteItem(packet, index);
-                return;
-            }
-            if (packet.isTapped === true) {
-                deleteItem(packet, index);
-            }
-            else {
-                // setTimeout(() => {
-                if (packet.y > GameData.stageHeight + packet.height) {
-                    deleteItem(packet, index);
-                }
-                else {
-                    packet.y += pass * GameData.speed / 1;
-                }
-                // }, 0)
-            }
-            _this.setChildIndex(_this.topLeftSpr, 999);
-            _this.setChildIndex(_this.topRightSpr, 999);
-        });
-        this.timeOnEnterFrame = now;
+        if (GameControl.getGameState() === 2) {
+            this.packetList.forEach(deleteItem);
+            this.packetList = [];
+        }
+        else {
+            this.packetList
+                .filter(function (packet) { return packet.isTapped || packet.y > GameData.stageHeight + packet.height; })
+                .forEach(deleteItem);
+            this.packetList = this.packetList
+                .filter(function (packet) { return !packet.isTapped && packet.y < GameData.stageHeight + packet.height; });
+            this.packetList.forEach(function (packet) { return packet.y += pass * GameData.speed / 1; });
+        }
+        this.setChildIndex(this.topLeftSpr, 999);
+        this.setChildIndex(this.topRightSpr, 999);
     };
     PlayGameScene.prototype.addTopLeft = function () {
         var img = new egret.Bitmap();

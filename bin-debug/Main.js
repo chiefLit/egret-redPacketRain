@@ -156,12 +156,12 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         var _this = this;
         var startGameScene = new StartGameScene();
-        var playGameScene = new PlayGameScene();
         startGameScene.endCountdown = function () {
             _this.removeChild(startGameScene);
+            var playGameScene = new PlayGameScene();
             _this.addChild(playGameScene);
         };
-        this.addChild(playGameScene);
+        this.addChild(startGameScene);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

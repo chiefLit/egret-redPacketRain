@@ -16,7 +16,7 @@ var GameData = (function () {
     // 红包出现几率
     GameData.packetProbability = 0.3;
     // 红包下落速度(px/ms)
-    GameData.speed = 0.2;
+    GameData.speed = 0.4;
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

@@ -19,7 +19,7 @@ var RedPacket = (function (_super) {
         _this.isTapped = false;
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initView, _this);
         _this.touchEnabled = true;
-        _this.addEventListener(egret.TouchEvent.TOUCH_TAP, _this.onTouchTap, _this);
+        _this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.onTouchBegin, _this);
         return _this;
     }
     // 初始化
@@ -32,10 +32,6 @@ var RedPacket = (function (_super) {
         var bg = new egret.Bitmap();
         var index = Math.ceil(Math.random() * 4);
         bg.texture = RES.getRes("redpacket_person" + index + "@2x_png");
-        // let bg:egret.Sprite = new egret.Sprite();
-        // bg.graphics.beginFill(0xff0000);
-        // bg.graphics.drawRect(0,0,50,100);
-        // bg.graphics.endFill();
         this.width = bg.width;
         this.height = bg.height;
         this.addChild(bg);
@@ -46,9 +42,10 @@ var RedPacket = (function (_super) {
         this.x = Math.random() * (GameData.stageWidth - this.width);
     };
     // 点击事件
-    RedPacket.prototype.onTouchTap = function () {
+    RedPacket.prototype.onTouchBegin = function () {
         this.isTapped = true;
         GameControl.addPackets();
+        // 添加点击的动画效果
         // let tw = egret.Tween.get(this);
         // tw.to({
         //     x: this.x - .1 * this.width / 2,
@@ -61,7 +58,7 @@ var RedPacket = (function (_super) {
     ;
     RedPacket.prototype.removeListener = function () {
         this.removeEventListener(egret.Event.ADDED_TO_STAGE, this.initView, this);
-        this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchTap, this);
+        this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTouchBegin, this);
     };
     return RedPacket;
 }(egret.Sprite));

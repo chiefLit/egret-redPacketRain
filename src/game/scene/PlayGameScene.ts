@@ -3,6 +3,12 @@
 class PlayGameScene extends egret.DisplayObjectContainer {
     private timeOnEnterFrame: number = 0;
 
+    // 左上角图标
+    private topLeftSpr: egret.Sprite = new egret.Sprite();
+
+    // 右上角图标
+    private topRightSpr: egret.Sprite = new egret.Sprite();
+
     public constructor() {
         super();
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.initView, this)
@@ -64,7 +70,7 @@ class PlayGameScene extends egret.DisplayObjectContainer {
             if (GameControl.getGameState() == 2) {
                 // 游戏结束
             } else {
-                if (Math.random() > GameData.packetProbability) {
+                if (Math.random() < GameData.packetProbability) {
                     let redPacket: RedPacket = new RedPacket();
                     this.packetList.push(redPacket)
                     this.addChild(redPacket)
@@ -82,40 +88,29 @@ class PlayGameScene extends egret.DisplayObjectContainer {
         let time = this.timeOnEnterFrame;
         let pass = now - time;
 
-        let deleteItem = (packet, index) => {
+        this.timeOnEnterFrame = now;
+
+        let deleteItem = (packet) => {
             packet.removeListener()
             this.removeChild(packet);
-            this.packetList.splice(index, 1);
         }
-        this.packetList.map((packet, index) => {
-            // 游戏结束操作
-            if (GameControl.getGameState() === 2) {
-                deleteItem(packet, index);
-                return;
-            }
-            if (packet.isTapped === true) {
-                deleteItem(packet, index);
-            } else {
-                // setTimeout(() => {
-                if (packet.y > GameData.stageHeight + packet.height) {
-                    deleteItem(packet, index);
-                } else {
-                    packet.y += pass * GameData.speed / 1;
-                }
-                // }, 0)
-            }
 
-            this.setChildIndex(this.topLeftSpr, 999)
-            this.setChildIndex(this.topRightSpr, 999)
-        })
-        this.timeOnEnterFrame = now;
+        if (GameControl.getGameState() === 2) {
+            this.packetList.forEach(deleteItem);
+            this.packetList = [];
+        } else {
+            this.packetList
+                .filter(packet => packet.isTapped || packet.y > GameData.stageHeight + packet.height)
+                .forEach(deleteItem)
+
+            this.packetList = this.packetList
+                .filter(packet => !packet.isTapped && packet.y < GameData.stageHeight + packet.height)
+            this.packetList.forEach(packet => packet.y += pass * GameData.speed / 1)
+        }
+
+        this.setChildIndex(this.topLeftSpr, 999)
+        this.setChildIndex(this.topRightSpr, 999)
     }
-
-    // 左上角图标
-    private topLeftSpr: egret.Sprite = new egret.Sprite();
-
-    // 右上角图标
-    private topRightSpr: egret.Sprite = new egret.Sprite();
 
 
     private addTopLeft(): void {
