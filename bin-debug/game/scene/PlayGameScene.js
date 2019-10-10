@@ -15,6 +15,10 @@ var PlayGameScene = (function (_super) {
         var _this = _super.call(this) || this;
         _this.timeOnEnterFrame = 0;
         _this.packetList = [];
+        // 左上角图标
+        _this.topLeftSpr = new egret.Sprite();
+        // 右上角图标
+        _this.topRightSpr = new egret.Sprite();
         _this.addEventListener(egret.Event.ADDED_TO_STAGE, _this.initView, _this);
         _this.addEventListener(egret.Event.ENTER_FRAME, _this.onEnterFrame, _this);
         _this.timeOnEnterFrame = egret.getTimer();
@@ -73,69 +77,71 @@ var PlayGameScene = (function (_super) {
     // 帧事件
     PlayGameScene.prototype.onEnterFrame = function () {
         var _this = this;
+        var now = egret.getTimer();
+        var time = this.timeOnEnterFrame;
+        var pass = now - time;
+        var deleteItem = function (packet, index) {
+            packet.removeListener();
+            _this.removeChild(packet);
+            _this.packetList.splice(index, 1);
+        };
         this.packetList.map(function (packet, index) {
             // 游戏结束操作
             if (GameControl.getGameState() === 2) {
-                packet.removeListener();
-                _this.removeChild(packet);
-                _this.packetList = [];
+                deleteItem(packet, index);
                 return;
             }
             if (packet.isTapped === true) {
-                packet.removeListener();
-                _this.packetList.splice(index, 1);
-                _this.removeChild(packet);
+                deleteItem(packet, index);
             }
             else {
+                // setTimeout(() => {
                 if (packet.y > GameData.stageHeight + packet.height) {
-                    packet.removeListener();
-                    _this.packetList.splice(index, 1);
+                    deleteItem(packet, index);
                 }
                 else {
-                    var now = egret.getTimer();
-                    var time = _this.timeOnEnterFrame;
-                    var pass = now - time;
-                    packet.y += pass * GameData.speed / 10;
+                    packet.y += pass * GameData.speed / 1;
                 }
+                // }, 0)
             }
+            _this.setChildIndex(_this.topLeftSpr, 999);
+            _this.setChildIndex(_this.topRightSpr, 999);
         });
-        this.timeOnEnterFrame = egret.getTimer();
+        this.timeOnEnterFrame = now;
     };
-    // 左上角图标
     PlayGameScene.prototype.addTopLeft = function () {
-        var topLeftSpr = new egret.Sprite();
         var img = new egret.Bitmap();
         img.texture = RES.getRes("redpacket_time@2x_png");
-        topLeftSpr.addChild(img);
+        this.topLeftSpr.addChild(img);
         img.width /= 2;
         img.height /= 2;
-        this.addChild(topLeftSpr);
-        topLeftSpr.width = img.width;
-        topLeftSpr.height = img.height;
-        topLeftSpr.x = 10;
-        topLeftSpr.y = 10;
+        this.addChild(this.topLeftSpr);
+        this.setChildIndex(this.topLeftSpr, 999);
+        this.topLeftSpr.width = img.width;
+        this.topLeftSpr.height = img.height;
+        this.topLeftSpr.x = 10;
+        this.topLeftSpr.y = 10;
         this.secondText = new egret.TextField();
-        this.setTopTextStyle(this.secondText, topLeftSpr);
+        this.setTopTextStyle(this.secondText, this.topLeftSpr);
         this.secondText.text = "10秒";
-        topLeftSpr.addChild(this.secondText);
+        this.topLeftSpr.addChild(this.secondText);
     };
-    // 右上角图标
     PlayGameScene.prototype.addTopRight = function () {
-        var topRightSpr = new egret.Sprite();
         var img = new egret.Bitmap();
         img.texture = RES.getRes("redpacket_number@2x_png");
-        topRightSpr.addChild(img);
+        this.topRightSpr.addChild(img);
         img.width /= 2;
         img.height /= 2;
-        this.addChild(topRightSpr);
-        topRightSpr.width = img.width;
-        topRightSpr.height = img.height;
-        topRightSpr.x = GameData.stageWidth - img.width - 10;
-        topRightSpr.y = 10;
+        this.addChild(this.topRightSpr);
+        this.setChildIndex(this.topRightSpr, 999);
+        this.topRightSpr.width = img.width;
+        this.topRightSpr.height = img.height;
+        this.topRightSpr.x = GameData.stageWidth - img.width - 10;
+        this.topRightSpr.y = 10;
         this.packetSumText = new egret.TextField();
-        this.setTopTextStyle(this.packetSumText, topRightSpr);
+        this.setTopTextStyle(this.packetSumText, this.topRightSpr);
         this.packetSumText.text = "0个";
-        topRightSpr.addChild(this.packetSumText);
+        this.topRightSpr.addChild(this.packetSumText);
     };
     PlayGameScene.prototype.setTopTextStyle = function (topText, spr) {
         topText.textColor = 0xd91935;

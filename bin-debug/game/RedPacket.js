@@ -29,13 +29,13 @@ var RedPacket = (function (_super) {
     };
     // 初始化背景图片
     RedPacket.prototype.setPacketBackground = function () {
-        // let bg: egret.Bitmap = new egret.Bitmap();
-        // let index = Math.ceil(Math.random() * 4)
-        // bg.texture = RES.getRes("redpacket_person" + index + "@2x_png");
-        var bg = new egret.Sprite();
-        bg.graphics.beginFill(0xff0000);
-        bg.graphics.drawRect(0, 0, 50, 100);
-        bg.graphics.endFill();
+        var bg = new egret.Bitmap();
+        var index = Math.ceil(Math.random() * 4);
+        bg.texture = RES.getRes("redpacket_person" + index + "@2x_png");
+        // let bg:egret.Sprite = new egret.Sprite();
+        // bg.graphics.beginFill(0xff0000);
+        // bg.graphics.drawRect(0,0,50,100);
+        // bg.graphics.endFill();
         this.width = bg.width;
         this.height = bg.height;
         this.addChild(bg);

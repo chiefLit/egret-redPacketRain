@@ -14,7 +14,7 @@ var GameData = (function () {
     // 红包出现时间间隔(ms)
     GameData.packetInterval = 100;
     // 红包出现几率
-    GameData.packetProbability = 0.5;
+    GameData.packetProbability = 0.3;
     // 红包下落速度(px/ms)
     GameData.speed = 0.2;
     return GameData;

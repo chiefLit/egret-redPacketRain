@@ -14,7 +14,7 @@ class GameData {
     public static packetInterval: number = 100;
 
     // 红包出现几率
-    public static packetProbability: number = 0.5;
+    public static packetProbability: number = 0.3;
 
     // 红包下落速度(px/ms)
     public static speed: number = 0.2;
