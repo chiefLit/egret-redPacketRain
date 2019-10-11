@@ -90,9 +90,11 @@ var PlayGameScene = (function (_super) {
             this.packetList = [];
         }
         else {
+            // 删除已被点击的和在界面外的
             this.packetList
                 .filter(function (packet) { return packet.isTapped || packet.y > GameData.stageHeight + packet.height; })
                 .forEach(deleteItem);
+            // 进行单帧操作
             this.packetList = this.packetList
                 .filter(function (packet) { return !packet.isTapped && packet.y < GameData.stageHeight + packet.height; });
             this.packetList.forEach(function (packet) { return packet.y += pass * GameData.speed / 1; });

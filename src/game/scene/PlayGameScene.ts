@@ -99,10 +99,12 @@ class PlayGameScene extends egret.DisplayObjectContainer {
             this.packetList.forEach(deleteItem);
             this.packetList = [];
         } else {
+            // 删除已被点击的和在界面外的
             this.packetList
                 .filter(packet => packet.isTapped || packet.y > GameData.stageHeight + packet.height)
                 .forEach(deleteItem)
-
+            
+            // 进行单帧操作
             this.packetList = this.packetList
                 .filter(packet => !packet.isTapped && packet.y < GameData.stageHeight + packet.height)
             this.packetList.forEach(packet => packet.y += pass * GameData.speed / 1)
