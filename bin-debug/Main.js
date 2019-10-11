@@ -98,9 +98,14 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var height, width;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.loadResource()];
+                    case 0:
+                        height = egret.Capabilities.boundingClientHeight;
+                        width = egret.Capabilities.boundingClientWidth;
+                        this.stage.setContentSize(width, height);
+                        return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
                         this.createGameScene();

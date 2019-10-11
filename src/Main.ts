@@ -58,6 +58,9 @@ class Main extends eui.UILayer {
     }
 
     private async runGame() {
+        let height = egret.Capabilities.boundingClientHeight;
+        let width = egret.Capabilities.boundingClientWidth;
+        this.stage.setContentSize(width, height);
         await this.loadResource()
         this.createGameScene();
         // const result = await RES.getResAsync("description_json")
